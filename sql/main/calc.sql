@@ -3,7 +3,7 @@ CREATE TABLE bookings.results (
 	response text
 );
 
---1.Вывести максимальное количество человек в одном бронировании
+--1.Р’С‹РІРµСЃС‚Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С‡РµР»РѕРІРµРє РІ РѕРґРЅРѕРј Р±СЂРѕРЅРёСЂРѕРІР°РЅРёРё
 
 INSERT INTO bookings.results
 select 1 as id, max(t1.pass_count) as response from (
@@ -12,7 +12,7 @@ select 1 as id, max(t1.pass_count) as response from (
   ) as t1;
 
 
---2.Вывести количество бронирований с количеством людей больше среднего значения людей на одно бронирование
+--2.Р’С‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёР№ СЃ РєРѕР»РёС‡РµСЃС‚РІРѕРј Р»СЋРґРµР№ Р±РѕР»СЊС€Рµ СЃСЂРµРґРЅРµРіРѕ Р·РЅР°С‡РµРЅРёСЏ Р»СЋРґРµР№ РЅР° РѕРґРЅРѕ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёРµ
 
 INSERT INTO bookings.results
 select 2 as id, count(t2.book_ref) as response from (
@@ -24,8 +24,8 @@ having count(passenger_id) > (select avg(t1.pass_count) as pass_avg from
 ) t2;
 
 
---3.Вывести количество бронирований, у которых состав пассажиров повторялся
--- два и более раза, среди бронирований с максимальным количеством людей (п.1)?
+--3.Р’С‹РІРµСЃС‚Рё РєРѕР»РёС‡РµСЃС‚РІРѕ Р±СЂРѕРЅРёСЂРѕРІР°РЅРёР№, Сѓ РєРѕС‚РѕСЂС‹С… СЃРѕСЃС‚Р°РІ РїР°СЃСЃР°Р¶РёСЂРѕРІ РїРѕРІС‚РѕСЂСЏР»СЃСЏ
+-- РґРІР° Рё Р±РѕР»РµРµ СЂР°Р·Р°, СЃСЂРµРґРё Р±СЂРѕРЅРёСЂРѕРІР°РЅРёР№ СЃ РјР°РєСЃРёРјР°Р»СЊРЅС‹Рј РєРѕР»РёС‡РµСЃС‚РІРѕРј Р»СЋРґРµР№ (Рї.1)?
 
 INSERT INTO bookings.results
 select 3 as id, case when sum(t4.book_ref_count) is null then 0 else sum(t4.book_ref_count) end response from (
@@ -44,8 +44,8 @@ select 3 as id, case when sum(t4.book_ref_count) is null then 0 else sum(t4.book
 ) t4;
 
 
---4.Вывести номера брони и контактную информацию по пассажирам в брони
---(passenger_id, passenger_name, contact_data) с количеством людей в брони = 3
+--4.Р’С‹РІРµСЃС‚Рё РЅРѕРјРµСЂР° Р±СЂРѕРЅРё Рё РєРѕРЅС‚Р°РєС‚РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ РїРѕ РїР°СЃСЃР°Р¶РёСЂР°Рј РІ Р±СЂРѕРЅРё
+--(passenger_id, passenger_name, contact_data) СЃ РєРѕР»РёС‡РµСЃС‚РІРѕРј Р»СЋРґРµР№ РІ Р±СЂРѕРЅРё = 3
 
 INSERT INTO bookings.results
 select 4 as id, concat_ws('|', book_ref, passenger_id, passenger_name, contact_data) as response from tickets
@@ -57,7 +57,7 @@ where book_ref in (
 order by book_ref, passenger_id, passenger_name, contact_data;
 
 
---5.Вывести максимальное количество перелётов на бронь
+--5.Р’С‹РІРµСЃС‚Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµР»С‘С‚РѕРІ РЅР° Р±СЂРѕРЅСЊ
 
 INSERT INTO bookings.results
 select 5 as id, max(t2.flight_count) as response from (
@@ -70,7 +70,7 @@ select 5 as id, max(t2.flight_count) as response from (
 ) t2;
 
 
---6.Вывести максимальное количество перелётов на пассажира в одной брони
+--6.Р’С‹РІРµСЃС‚Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµР»С‘С‚РѕРІ РЅР° РїР°СЃСЃР°Р¶РёСЂР° РІ РѕРґРЅРѕР№ Р±СЂРѕРЅРё
 
 INSERT INTO bookings.results
 select 6 as id, max(t2.flight_count) as response from (
@@ -83,7 +83,7 @@ select 6 as id, max(t2.flight_count) as response from (
 ) t2;
 
 
---7.Вывести максимальное количество перелётов на пассажира
+--7.Р’С‹РІРµСЃС‚Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµР»С‘С‚РѕРІ РЅР° РїР°СЃСЃР°Р¶РёСЂР°
 
 INSERT INTO bookings.results
 select 7 as id, max(t2.flight_count) as response from (
@@ -95,8 +95,8 @@ select 7 as id, max(t2.flight_count) as response from (
 ) t2;
 
 
---8.Вывести контактную информацию по пассажиру(ам) (passenger_id, passenger_name, contact_data) и
--- общие траты на билеты, для пассажира потратившему минимальное количество денег на перелеты
+--8.Р’С‹РІРµСЃС‚Рё РєРѕРЅС‚Р°РєС‚РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ РїРѕ РїР°СЃСЃР°Р¶РёСЂСѓ(Р°Рј) (passenger_id, passenger_name, contact_data) Рё
+-- РѕР±С‰РёРµ С‚СЂР°С‚С‹ РЅР° Р±РёР»РµС‚С‹, РґР»СЏ РїР°СЃСЃР°Р¶РёСЂР° РїРѕС‚СЂР°С‚РёРІС€РµРјСѓ РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРµРЅРµРі РЅР° РїРµСЂРµР»РµС‚С‹
 
 with pass_sum_amount as (
   select t1.passenger_id, t1.passenger_name, t1.contact_data, sum(t1.amount) as pass_amount from (
@@ -114,8 +114,8 @@ select min(pass_amount) from pass_sum_amount
 );
 
 
---9.Вывести контактную информацию по пассажиру(ам) (passenger_id, passenger_name, contact_data) и
--- общее время в полётах, для пассажира, который провёл максимальное время в полётах
+--9.Р’С‹РІРµСЃС‚Рё РєРѕРЅС‚Р°РєС‚РЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ РїРѕ РїР°СЃСЃР°Р¶РёСЂСѓ(Р°Рј) (passenger_id, passenger_name, contact_data) Рё
+-- РѕР±С‰РµРµ РІСЂРµРјСЏ РІ РїРѕР»С‘С‚Р°С…, РґР»СЏ РїР°СЃСЃР°Р¶РёСЂР°, РєРѕС‚РѕСЂС‹Р№ РїСЂРѕРІС‘Р» РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ РІ РїРѕР»С‘С‚Р°С…
 
 with dur_sum_table as (
   select t1.passenger_id, t1.passenger_name, t1.contact_data, sum(t1.actual_duration) as dur_sum from (
@@ -134,7 +134,7 @@ select max(dur_sum) from dur_sum_table
 );
 
 
---10.Вывести город(а) с количеством аэропортов больше одного
+--10.Р’С‹РІРµСЃС‚Рё РіРѕСЂРѕРґ(Р°) СЃ РєРѕР»РёС‡РµСЃС‚РІРѕРј Р°СЌСЂРѕРїРѕСЂС‚РѕРІ Р±РѕР»СЊС€Рµ РѕРґРЅРѕРіРѕ
 
 INSERT INTO bookings.results
 select 10 as id, city as response from airports
@@ -143,7 +143,7 @@ having count(airport_code) > 1
 order by city;
 
 
---11.Вывести город(а), у которого самое меньшее количество городов прямого сообщения
+--11.Р’С‹РІРµСЃС‚Рё РіРѕСЂРѕРґ(Р°), Сѓ РєРѕС‚РѕСЂРѕРіРѕ СЃР°РјРѕРµ РјРµРЅСЊС€РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РіРѕСЂРѕРґРѕРІ РїСЂСЏРјРѕРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ
 
 with city_table as (
  select t1.departure_city, count(t1.arrival_city) as arr_city from (
@@ -158,7 +158,7 @@ where arr_city = (select min(arr_city) from city_table)
 order by departure_city;
 
 
---12.Вывести пары городов, у которых нет прямых сообщений исключив реверсные дубликаты
+--12.Р’С‹РІРµСЃС‚Рё РїР°СЂС‹ РіРѕСЂРѕРґРѕРІ, Сѓ РєРѕС‚РѕСЂС‹С… РЅРµС‚ РїСЂСЏРјС‹С… СЃРѕРѕР±С‰РµРЅРёР№ РёСЃРєР»СЋС‡РёРІ СЂРµРІРµСЂСЃРЅС‹Рµ РґСѓР±Р»РёРєР°С‚С‹
 
 with dep_arr_table as (select distinct departure_city, arrival_city from routes)
 INSERT INTO bookings.results
@@ -171,17 +171,17 @@ select 12 as id, concat_ws('|', t3.departure_city, t3.arrival_city) as response 
 order by t3.departure_city, t3.arrival_city;
 
 
---13.Вывести города, до которых нельзя добраться без пересадок из Москвы?
+--13.Р’С‹РІРµСЃС‚Рё РіРѕСЂРѕРґР°, РґРѕ РєРѕС‚РѕСЂС‹С… РЅРµР»СЊР·СЏ РґРѕР±СЂР°С‚СЊСЃСЏ Р±РµР· РїРµСЂРµСЃР°РґРѕРє РёР· РњРѕСЃРєРІС‹?
 
 INSERT INTO bookings.results
 select distinct 13 as id, arrival_city as response from routes
-where arrival_city != 'Москва' and arrival_city not in (
+where arrival_city != 'РњРѕСЃРєРІР°' and arrival_city not in (
         select arrival_city from routes
-        where departure_city = 'Москва')
+        where departure_city = 'РњРѕСЃРєРІР°')
 order by arrival_city;
 
 
---14.Вывести модель самолета, который выполнил больше всего рейсов
+--14.Р’С‹РІРµСЃС‚Рё РјРѕРґРµР»СЊ СЃР°РјРѕР»РµС‚Р°, РєРѕС‚РѕСЂС‹Р№ РІС‹РїРѕР»РЅРёР» Р±РѕР»СЊС€Рµ РІСЃРµРіРѕ СЂРµР№СЃРѕРІ
 
 with flight_count as (
    select ad.model, count(f.flight_no) as f_count from flights f 
@@ -193,7 +193,7 @@ select 14 as id, model as response from flight_count
 where f_count = (select max(f_count) from flight_count);
 
 
---15.Вывести модель самолета, который перевез больше всего пассажиров
+--15.Р’С‹РІРµСЃС‚Рё РјРѕРґРµР»СЊ СЃР°РјРѕР»РµС‚Р°, РєРѕС‚РѕСЂС‹Р№ РїРµСЂРµРІРµР· Р±РѕР»СЊС€Рµ РІСЃРµРіРѕ РїР°СЃСЃР°Р¶РёСЂРѕРІ
 
 with pass_count_table as(
    select ad.model, count(t.passenger_id) as pass_count from flights f 
@@ -207,7 +207,7 @@ select 15 as id, model as response from pass_count_table
 	where pass_count = (select max(pass_count) from pass_count_table);
 
 
---16.Вывести отклонение в минутах суммы запланированного времени перелета от фактического по всем перелётам
+--16.Р’С‹РІРµСЃС‚Рё РѕС‚РєР»РѕРЅРµРЅРёРµ РІ РјРёРЅСѓС‚Р°С… СЃСѓРјРјС‹ Р·Р°РїР»Р°РЅРёСЂРѕРІР°РЅРЅРѕРіРѕ РІСЂРµРјРµРЅРё РїРµСЂРµР»РµС‚Р° РѕС‚ С„Р°РєС‚РёС‡РµСЃРєРѕРіРѕ РїРѕ РІСЃРµРј РїРµСЂРµР»С‘С‚Р°Рј
 
 INSERT INTO bookings.results
 select 16 as id, abs(extract(epoch from t1.dif)/60) as response from (
@@ -216,16 +216,16 @@ select 16 as id, abs(extract(epoch from t1.dif)/60) as response from (
 ) t1;
 
 
---17.Вывести города, в которые осуществлялся перелёт из Санкт-Петербурга 2016-09-13
+--17.Р’С‹РІРµСЃС‚Рё РіРѕСЂРѕРґР°, РІ РєРѕС‚РѕСЂС‹Рµ РѕСЃСѓС‰РµСЃС‚РІР»СЏР»СЃСЏ РїРµСЂРµР»С‘С‚ РёР· РЎР°РЅРєС‚-РџРµС‚РµСЂР±СѓСЂРіР° 2016-09-13
 
 INSERT INTO bookings.results
 select distinct 17 as id, arrival_city as response
 from flights_v
-where departure_city = 'Санкт-Петербург' and cast(actual_departure as date) = '2016-09-13'
+where departure_city = 'РЎР°РЅРєС‚-РџРµС‚РµСЂР±СѓСЂРі' and cast(actual_departure as date) = '2016-09-13'
 order by arrival_city;
 
 
---18.Вывести перелёт(ы) с максимальной стоимостью всех билетов
+--18.Р’С‹РІРµСЃС‚Рё РїРµСЂРµР»С‘С‚(С‹) СЃ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЃС‚РѕРёРјРѕСЃС‚СЊСЋ РІСЃРµС… Р±РёР»РµС‚РѕРІ
 
 with flight_amount_table as (
    select flight_id, sum(amount) as flight_amount from ticket_flights
@@ -235,7 +235,7 @@ select 18 as id, flight_id as response from flight_amount_table
 where flight_amount = (select max(flight_amount) from flight_amount_table);
 
 
---19.Выбрать дни в которых было осуществлено минимальное количество перелётов
+--19.Р’С‹Р±СЂР°С‚СЊ РґРЅРё РІ РєРѕС‚РѕСЂС‹С… Р±С‹Р»Рѕ РѕСЃСѓС‰РµСЃС‚РІР»РµРЅРѕ РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµР»С‘С‚РѕРІ
 
 with flight_count_table as (
    select cast(actual_departure as date) as flight_date, count(flight_id) as flight_count from flights f
@@ -247,17 +247,17 @@ select 19 as id, flight_date as response from flight_count_table
 where flight_count = (select min(flight_count) from flight_count_table);
 
 
---20.Вывести среднее количество вылетов в день из Москвы за 09 месяц 2016 года
+--20.Р’С‹РІРµСЃС‚Рё СЃСЂРµРґРЅРµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РІС‹Р»РµС‚РѕРІ РІ РґРµРЅСЊ РёР· РњРѕСЃРєРІС‹ Р·Р° 09 РјРµСЃСЏС† 2016 РіРѕРґР°
 
 INSERT INTO bookings.results
 select 20 as id, case when avg(t1.flight_count) is null then 0 else avg(t1.flight_count) end response from (
    select cast(actual_departure as date) as flight_date, count(flight_id) as flight_count from flights_v
-   where departure_city = 'Москва' and actual_departure is not null and date_trunc('month', actual_departure) = '2016-09-01'
+   where departure_city = 'РњРѕСЃРєРІР°' and actual_departure is not null and date_trunc('month', actual_departure) = '2016-09-01'
    group by cast(actual_departure as date)
 ) t1;
 
 
---21.Вывести топ 5 городов у которых среднее время перелета до пункта назначения больше 3 часов
+--21.Р’С‹РІРµСЃС‚Рё С‚РѕРї 5 РіРѕСЂРѕРґРѕРІ Сѓ РєРѕС‚РѕСЂС‹С… СЃСЂРµРґРЅРµРµ РІСЂРµРјСЏ РїРµСЂРµР»РµС‚Р° РґРѕ РїСѓРЅРєС‚Р° РЅР°Р·РЅР°С‡РµРЅРёСЏ Р±РѕР»СЊС€Рµ 3 С‡Р°СЃРѕРІ
 
 INSERT INTO bookings.results
 select 21 as id, t2.departure_city as response from (
